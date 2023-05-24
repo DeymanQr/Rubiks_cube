@@ -2,14 +2,14 @@ import math
 
 
 def blacking(colors, i):
-    return (
+    return [
         (colors[0], '', '')[i % 9 // 3],
         (colors[1], '', '')[i // 9],
         ('', '', colors[2])[i % 3],
         ('', '', colors[3])[i % 9 // 3],
         ('', '', colors[4])[i // 9],
         (colors[5], '', '')[i % 3],
-    )
+    ]
 
 
 def rotate(el, dx, dy, dz):

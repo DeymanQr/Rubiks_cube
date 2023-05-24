@@ -20,6 +20,102 @@ class RubiksCube:
         # ]
         self.update(alph * math.pi / SPEED_COEF_X / 180, bet * math.pi / SPEED_COEF_Y / 180, gam * math.pi / 180)
 
+    @staticmethod
+    def rtt(x, y, notclockwise=1):
+        return -y * (notclockwise * 2 - 1), x * (notclockwise * 2 - 1)
+
+    def rotate_facet(self, direction, num, notclockwise=1):
+        if direction == 'x':
+            a1, a2 = 0, 1
+            for _ in range(3):
+                b1, b2 = self.rtt(a1, a2, notclockwise)
+                self.cubes[(a2 + 1) * 9 + (a1 + 1) * 3 + (num + 1)], self.cubes[(b2 + 1) * 9 + (b1 + 1) * 3 + (num + 1)] \
+                    = self.cubes[(b2 + 1) * 9 + (b1 + 1) * 3 + (num + 1)], self.cubes[
+                    (a2 + 1) * 9 + (a1 + 1) * 3 + (num + 1)]
+                for i in range(3):
+                    self.cubes[(a2 + 1) * 9 + (a1 + 1) * 3 + (num + 1)].center[i], self.cubes[
+                        (b2 + 1) * 9 + (b1 + 1) * 3 + (num + 1)].center[i] \
+                        = self.cubes[(b2 + 1) * 9 + (b1 + 1) * 3 + (num + 1)].center[i], self.cubes[
+                        (a2 + 1) * 9 + (a1 + 1) * 3 + (num + 1)].center[i]
+                self.cubes[(a2 + 1) * 9 + (a1 + 1) * 3 + (num + 1)].rotate(direction, notclockwise)
+                a1, a2 = b1, b2
+            self.cubes[(a2 + 1) * 9 + (a1 + 1) * 3 + (num + 1)].rotate(direction, notclockwise)
+
+            a1, a2 = 1, 1
+            for _ in range(3):
+                b1, b2 = self.rtt(a1, a2, notclockwise)
+                self.cubes[(a2 + 1) * 9 + (a1 + 1) * 3 + (num + 1)], self.cubes[(b2 + 1) * 9 + (b1 + 1) * 3 + (num + 1)] \
+                    = self.cubes[(b2 + 1) * 9 + (b1 + 1) * 3 + (num + 1)], self.cubes[
+                    (a2 + 1) * 9 + (a1 + 1) * 3 + (num + 1)]
+                for i in range(3):
+                    self.cubes[(a2 + 1) * 9 + (a1 + 1) * 3 + (num + 1)].center[i], self.cubes[
+                        (b2 + 1) * 9 + (b1 + 1) * 3 + (num + 1)].center[i] \
+                        = self.cubes[(b2 + 1) * 9 + (b1 + 1) * 3 + (num + 1)].center[i], self.cubes[
+                        (a2 + 1) * 9 + (a1 + 1) * 3 + (num + 1)].center[i]
+                self.cubes[(a2 + 1) * 9 + (a1 + 1) * 3 + (num + 1)].rotate(direction, notclockwise)
+                a1, a2 = b1, b2
+            self.cubes[(a2 + 1) * 9 + (a1 + 1) * 3 + (num + 1)].rotate(direction, notclockwise)
+        if direction == 'y':
+            a1, a2 = 0, 1
+            for _ in range(3):
+                b1, b2 = self.rtt(a1, a2, notclockwise)
+                self.cubes[(a2 + 1) * 9 + (num + 1) * 3 + (a1 + 1)], self.cubes[(b2 + 1) * 9 + (num + 1) * 3 + (b1 + 1)] \
+                    = self.cubes[(b2 + 1) * 9 + (num + 1) * 3 + (b1 + 1)], self.cubes[
+                    (a2 + 1) * 9 + (num + 1) * 3 + (a1 + 1)]
+                for i in range(3):
+                    self.cubes[(a2 + 1) * 9 + (num + 1) * 3 + (a1 + 1)].center[i], self.cubes[
+                        (b2 + 1) * 9 + (num + 1) * 3 + (b1 + 1)].center[i] \
+                        = self.cubes[(b2 + 1) * 9 + (num + 1) * 3 + (b1 + 1)].center[i], self.cubes[
+                        (a2 + 1) * 9 + (num + 1) * 3 + (a1 + 1)].center[i]
+                self.cubes[(a2 + 1) * 9 + (num + 1) * 3 + (a1 + 1)].rotate(direction, notclockwise)
+                a1, a2 = b1, b2
+            self.cubes[(a2 + 1) * 9 + (num + 1) * 3 + (a1 + 1)].rotate(direction, notclockwise)
+
+            a1, a2 = 1, 1
+            for _ in range(3):
+                b1, b2 = self.rtt(a1, a2, notclockwise)
+                self.cubes[(a2 + 1) * 9 + (num + 1) * 3 + (a1 + 1)], self.cubes[(b2 + 1) * 9 + (num + 1) * 3 + (b1 + 1)] \
+                    = self.cubes[(b2 + 1) * 9 + (num + 1) * 3 + (b1 + 1)], self.cubes[
+                    (a2 + 1) * 9 + (num + 1) * 3 + (a1 + 1)]
+                for i in range(3):
+                    self.cubes[(a2 + 1) * 9 + (num + 1) * 3 + (a1 + 1)].center[i], self.cubes[
+                        (b2 + 1) * 9 + (num + 1) * 3 + (b1 + 1)].center[i] \
+                        = self.cubes[(b2 + 1) * 9 + (num + 1) * 3 + (b1 + 1)].center[i], self.cubes[
+                        (a2 + 1) * 9 + (num + 1) * 3 + (a1 + 1)].center[i]
+                self.cubes[(a2 + 1) * 9 + (num + 1) * 3 + (a1 + 1)].rotate(direction, notclockwise)
+                a1, a2 = b1, b2
+            self.cubes[(a2 + 1) * 9 + (num + 1) * 3 + (a1 + 1)].rotate(direction, notclockwise)
+        if direction == 'z':
+            a1, a2 = 0, 1
+            for _ in range(3):
+                b1, b2 = self.rtt(a1, a2, notclockwise)
+                self.cubes[(num + 1) * 9 + (a2 + 1) * 3 + (a1 + 1)], self.cubes[(num + 1) * 9 + (b2 + 1) * 3 + (b1 + 1)] \
+                    = self.cubes[(num + 1) * 9 + (b2 + 1) * 3 + (b1 + 1)], self.cubes[
+                    (num + 1) * 9 + (a2 + 1) * 3 + (a1 + 1)]
+                for i in range(3):
+                    self.cubes[(num + 1) * 9 + (a2 + 1) * 3 + (a1 + 1)].center[i], self.cubes[
+                        (num + 1) * 9 + (b2 + 1) * 3 + (b1 + 1)].center[i] \
+                        = self.cubes[(num + 1) * 9 + (b2 + 1) * 3 + (b1 + 1)].center[i], self.cubes[
+                        (num + 1) * 9 + (a2 + 1) * 3 + (a1 + 1)].center[i]
+                self.cubes[(num + 1) * 9 + (a2 + 1) * 3 + (a1 + 1)].rotate(direction, notclockwise)
+                a1, a2 = b1, b2
+            self.cubes[(num + 1) * 9 + (a2 + 1) * 3 + (a1 + 1)].rotate(direction, notclockwise)
+
+            a1, a2 = 1, 1
+            for _ in range(3):
+                b1, b2 = self.rtt(a1, a2, notclockwise)
+                self.cubes[(num + 1) * 9 + (a2 + 1) * 3 + (a1 + 1)], self.cubes[(num + 1) * 9 + (b2 + 1) * 3 + (b1 + 1)] \
+                    = self.cubes[(num + 1) * 9 + (b2 + 1) * 3 + (b1 + 1)], self.cubes[
+                    (num + 1) * 9 + (a2 + 1) * 3 + (a1 + 1)]
+                for i in range(3):
+                    self.cubes[(num + 1) * 9 + (a2 + 1) * 3 + (a1 + 1)].center[i], self.cubes[
+                        (num + 1) * 9 + (b2 + 1) * 3 + (b1 + 1)].center[i] \
+                        = self.cubes[(num + 1) * 9 + (b2 + 1) * 3 + (b1 + 1)].center[i], self.cubes[
+                        (num + 1) * 9 + (a2 + 1) * 3 + (a1 + 1)].center[i]
+                self.cubes[(num + 1) * 9 + (a2 + 1) * 3 + (a1 + 1)].rotate(direction, notclockwise)
+                a1, a2 = b1, b2
+            self.cubes[(num + 1) * 9 + (a2 + 1) * 3 + (a1 + 1)].rotate(direction, notclockwise)
+
     def update(self, dx, dy, dz):
         for cube in self.cubes:
             # bss = [cube.center[i]-self.center[i] for i in range(3)]

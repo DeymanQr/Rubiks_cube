@@ -36,23 +36,36 @@ class Facet:
 
 
 class Cube:
+    rtt = {'x': (0, 1, 3, 4), 'y': (1, 2, 4, 5), 'z': (0, 2, 3, 5)}
+
     def __init__(self, centerx, centery, centerz, w, colors, alph, bet):
         self.center = [centerx, centery, centerz]
+        self.colors = colors
         # self.width = w
         # self.basises = [[w//2, -w//2, -w//2], [w//2, -w//2, w//2], [-w//2, -w//2, w//2], [-w//2, -w//2, -w//2]]
         self.facetes = [
-            Facet([[w//2, -w//2, -w//2], [w//2, -w//2, w//2], [-w//2, -w//2, w//2], [-w//2, -w//2, -w//2]], colors[0]),
-            Facet([[w//2, w//2, -w//2], [w//2, -w//2, -w//2], [-w//2, -w//2, -w//2], [-w//2, w//2, -w//2]], colors[1]),
-            Facet([[w//2, w//2, w//2], [w//2, -w//2, w//2], [w//2, -w//2, -w//2], [w//2, w//2, -w//2]], colors[2]),
-            Facet([[w//2, w//2, -w//2], [w//2, w//2, w//2], [-w//2, w//2, w//2], [-w//2, w//2, -w//2]], colors[3]),
-            Facet([[-w//2, w//2, w//2], [-w//2, -w//2, w//2], [w//2, -w//2, w//2], [w//2, w//2, w//2]], colors[4]),
-            Facet([[-w//2, w//2, -w//2], [-w//2, -w//2, -w//2], [-w//2, -w//2, w//2], [-w//2, w//2, w//2]], colors[5])
+            Facet([[w//2, -w//2, -w//2], [w//2, -w//2, w//2], [-w//2, -w//2, w//2], [-w//2, -w//2, -w//2]], self.colors[0]),
+            Facet([[w//2, w//2, -w//2], [w//2, -w//2, -w//2], [-w//2, -w//2, -w//2], [-w//2, w//2, -w//2]], self.colors[1]),
+            Facet([[w//2, w//2, w//2], [w//2, -w//2, w//2], [w//2, -w//2, -w//2], [w//2, w//2, -w//2]], self.colors[2]),
+            Facet([[w//2, w//2, -w//2], [w//2, w//2, w//2], [-w//2, w//2, w//2], [-w//2, w//2, -w//2]], self.colors[3]),
+            Facet([[-w//2, w//2, w//2], [-w//2, -w//2, w//2], [w//2, -w//2, w//2], [w//2, w//2, w//2]], self.colors[4]),
+            Facet([[-w//2, w//2, -w//2], [-w//2, -w//2, -w//2], [-w//2, -w//2, w//2], [-w//2, w//2, w//2]], self.colors[5])
         ]
         self.update(alph*math.pi/SPEED_COEF_X/180, bet*math.pi/SPEED_COEF_Y/180, 0)
 
     # def getcube(self):
         # print(self.basises + [[-j for j in i] for i in self.basises])
         # return ((self.center[0] + basis[0], self.center[1] + basis[1], self.center[2] + basis[2]) for basis in self.basises + [[-j for j in i] for i in self.basises])
+
+    def rotate(self, axis, notclockwise):
+        # 1 -> range(1, 4, 1)
+        # -1 -> range(3, 0, -1)
+        for i in range(3 - 2 * notclockwise, 4 * notclockwise, notclockwise * 2 - 1):
+            self.colors[Cube.rtt[axis][i - 1]], self.colors[Cube.rtt[axis][i]] = self.colors[Cube.rtt[axis][i]], \
+                                                                                 self.colors[Cube.rtt[axis][i - 1]]
+
+        for i, j in enumerate(self.facetes):
+            j.color = self.colors[i]
 
     def update(self, dx, dy, dz):
         # dx *= SPEED_COEF_X

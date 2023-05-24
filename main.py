@@ -14,17 +14,32 @@ rcube = RubiksCube(WIDTH//2, HEIGHT//2, HEIGHT//2, RCUBE_W, ('w', 'b', 'o', 'y',
 camera = Camera(WIDTH//2, HEIGHT//2, 100-WIDTH, 100)
 mhandler = MouseHaldler()
 
+shift = False
 run = True
 while run:
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
             run = False
+        if e.type == pygame.KEYDOWN:
+            if e.key == pygame.K_u:
+                rcube.rotate_facet('y', -1, not shift)
+            if e.key == pygame.K_d:
+                rcube.rotate_facet('y', 1, shift)
+            if e.key == pygame.K_r:
+                rcube.rotate_facet('x', 1, not shift)
+            if e.key == pygame.K_l:
+                rcube.rotate_facet('x', -1, shift)
+            if e.key == pygame.K_f:
+                rcube.rotate_facet('z', -1, shift)
+            if e.key == pygame.K_b:
+                rcube.rotate_facet('z', 1, not shift)
         if e.type == pygame.MOUSEWHEEL:
             camera.coords[2] += e.y * SPEED_COEF_Z
             camera.plane += e.y * SPEED_COEF_Z
             if camera.coords[2] >= -CUBES_W*5 or camera.coords[2] <= -CUBES_W*15:
                 camera.coords[2] -= e.y * SPEED_COEF_Z
                 camera.plane -= e.y * SPEED_COEF_Z
+    shift = pygame.key.get_pressed()[pygame.K_LSHIFT]
     # c.update(0, 1)
     # mhandler.update_cubes(cubes)
     mhandler.update_cubes(rcube)
